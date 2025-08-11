@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DYNDOX - IT Solutions</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        /* Logo Animations */
+        .logo-icon {
+            animation: spin 14s linear infinite;
+            transform-origin: center;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-text {
+            background: linear-gradient(90deg, #a855f7, #ec4899, #a855f7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideGradient 6s linear infinite;
+        }
+        
+        @keyframes slideGradient {
+            0% { background-position: 0 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Animation Elements */
+        .animated-element-left, .animated-element-right {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animated-element-left {
+            transform: translateX(-50px);
+        }
+
+        .animated-element-right {
+            transform: translateX(50px);
+        }
+
+        .is-visible .animated-element-left,
+        .is-visible .animated-element-right {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Stagger Animation */
+        .stagger {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .stagger.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Team Card Hover Effects */
+        .team-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #374151, #1f2937);
+            border: 1px solid #4b5563;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+            border-color: #8b5cf6;
+        }
+
+        /* Carousel */
+        .carousel-container {
+            overflow: hidden;
+        }
+        
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carousel-item {
+            min-width: 25%;
+            box-sizing: border-box;
+            padding: 1rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .carousel-item {
+                min-width: 50%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .carousel-item {
+                min-width: 100%;
+            }
+        }
+
+        /* Desktop Dropdown */
+        @media (min-width: 1024px) {
+            .dropdown:hover .dropdown-menu {
+                display: block;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Mobile Dropdown */
+        .mobile-dropdown-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        
+        .mobile-dropdown-menu.open {
+            max-height: 200px;
+        }
+
+        /* Application View */
+        .application-view {
+            display: none;
+            min-height: 100vh;
+            padding-top: 8rem;
+            padding-bottom: 2rem;
+            background-color: #111827;
+        }
+        
+        .application-view iframe {
+            width: 100%;
+            height: 90vh;
+            border: none;
+            border-radius: 1rem;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white font-sans">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#home" class="flex items-center space-x-2 text-2xl font-extrabold">
+                <svg class="w-7 h-7 text-purple-600 logo-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L2 12l10 10 10-10L12 2Z"/>
+                </svg>
+                <span class="logo-text">DYNDOX</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <!-- What we do -->
+                <div class="relative dropdown">
+                    <button class="flex items-center text-white hover:text-purple-400 focus:outline-none py-2">
+                        What we do
+                        <i class="fa-solid fa-chevron-down ml-2 text-xs"></i>
+                    </button>
+                    <div class="dropdown-menu absolute hidden text-gray-700 pt-1 w-48 bg-white rounded-lg shadow-lg">
+                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-t-lg" href="#">Strategy & Consulting</a>
+                        <a class="block px-4 py-2 hover:bg-gray-200" href="#">Technology</a>
+                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-b-lg" href="#">Security</a>
+                    </div>
+                </div>
+                
+                <!-- What we think -->
+                <div class="relative dropdown">
+                    <button class="flex items-center text-white hover:text-purple-400 focus:outline-none py-2">
+                        What we think
+                        <i class="fa-solid fa-chevron-down ml-2 text-xs"></i>
+                    </button>
+                    <div class="dropdown-menu absolute hidden text-gray-700 pt-1 w-48 bg-white rounded-lg shadow-lg">
+                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-t-lg" href="#">Insights</a>
+                        <a class="block px-4 py-2 hover:bg-gray-200" href="#">Research</a>
+                        <a class="block px-4 py-2 hover:bg-gray-200" href="#">Publications</a>
+                    </div>
+                </div>
+                
+                <!-- Who we are -->
+                <div class="relative dropdown">
+                    <button class="flex items-center text-white hover:text-purple-400 focus:outline-none py-2">
+                        Who we are
+                        <i class="fa-solid fa-chevron-down ml-2 text-xs"></i>
+                    </button>
+                    <div class="dropdown-menu absolute hidden text-gray-700 pt-1 w-48 bg-white rounded-lg shadow-lg">
+                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-t-lg" href="#">About Us</a>
+                        <a class="block px-4 py-2 hover:bg-gray-200" href="#">Our Leadership</a>
+                        <a class="block px-4 py-2 hover:bg-gray-200" href="#">Social Impact</a>
+                    </div>
+                </div>
+                
+                <!-- Careers -->
+                <div class="relative dropdown">
+                    <button class="flex items-center text-white hover:text-purple-400 focus:outline-none py-2">
+                        Careers
+                        <i class="fa-solid fa-chevron-down ml-2 text-xs"></i>
+                    </button>
+                    <div class="dropdown-menu absolute hidden text-gray-700 pt-1 w-48 bg-white rounded-lg shadow-lg">
+                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-t-lg" href="#job-listings">Job Available</a>
+                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-b-lg" href="#team-section">Our Team</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <div class="lg:hidden flex items-center space-x-4">
+                <button id="mobile-menu-toggle" class="text-white focus:outline-none">
+                    <i class="fa-solid fa-bars h-6 w-6"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-gray-900 z-[60] mobile-menu flex flex-col p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold">Menu</h2>
+            <button id="mobile-menu-close" class="text-white focus:outline-none">
+                <i class="fa-solid fa-times h-6 w-6"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile What we do -->
+        <div class="mb-2">
+            <button class="mobile-dropdown-toggle w-full text-left px-4 py-3 text-white hover:bg-gray-800 rounded-lg flex justify-between items-center" data-target="mobile-dropdown-1">
+                What we do
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+            </button>
+            <div id="mobile-dropdown-1" class="mobile-dropdown-menu">
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#">Strategy & Consulting</a>
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#">Technology</a>
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#">Security</a>
+            </div>
+        </div>
+        
+        <!-- Mobile What we think -->
+        <div class="mb-2">
+            <button class="mobile-dropdown-toggle w-full text-left px-4 py-3 text-white hover:bg-gray-800 rounded-lg flex justify-between items-center" data-target="mobile-dropdown-2">
+                What we think
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+            </button>
+            <div id="mobile-dropdown-2" class="mobile-dropdown-menu">
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#">Insights</a>
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#">Research</a>
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#">Publications</a>
+            </div>
+        </div>
+        
+        <!-- Mobile Who we are -->
+        <div class="mb-2">
+            <button class="mobile-dropdown-toggle w-full text-left px-4 py-3 text-white hover:bg-gray-800 rounded-lg flex justify-between items-center" data-target="mobile-dropdown-3">
+                Who we are
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+            </button>
+            <div id="mobile-dropdown-3" class="mobile-dropdown-menu">
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#">About Us</a>
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#">Our Leadership</a>
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#">Social Impact</a>
+            </div>
+        </div>
+        
+        <!-- Mobile Careers -->
+        <div class="mb-2">
+            <button class="mobile-dropdown-toggle w-full text-left px-4 py-3 text-white hover:bg-gray-800 rounded-lg flex justify-between items-center" data-target="mobile-dropdown-4">
+                Careers
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+            </button>
+            <div id="mobile-dropdown-4" class="mobile-dropdown-menu">
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#job-listings">Job Available</a>
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#team-section">Our Team</a>
+            </div>
+        </div>
+    </div>
+
+    <main id="main-content">
+        <!-- Home View -->
+        <div id="home-view">
+            <!-- Hero Section -->
+            <section class="h-screen flex items-center justify-center relative overflow-hidden">
+                <canvas id="heroCanvas" class="absolute inset-0 w-full h-full"></canvas>
+                
+                <div class="relative z-10 text-center px-6">
+                    <h1 class="text-5xl md:text-7xl font-extrabold uppercase leading-tight">
+                        From <span class="text-purple-600">Blueprint</span><br/>
+                        to <span class="text-purple-600">Brilliance</span>
+                    </h1>
+                    <p class="max-w-xl mx-auto mt-6 text-lg text-gray-300">
+                        The supply chains we need, the food we eat, the clothes we wear —
+                        together, we can reinvent anything.
+                    </p>
+                    <a href="#research-reports" class="mt-8 inline-block px-8 py-3 bg-purple-600 rounded-full font-bold hover:bg-purple-700 transition-colors">
+                        See what we do
+                    </a>
+                </div>
+            </section>
+
+            <!-- Research Section -->
+            <section id="research-reports" class="py-20 bg-gray-900">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center">Latest Research & Insights</h2>
+                    <div class="carousel-container relative">
+                        <div class="carousel-wrapper">
+                            <!-- Carousel Item 1 -->
+                            <div class="carousel-item">
+                                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                                    <img src="https://placehold.co/600x400/312e81/ffffff?text=AI+Solution" alt="AI Solution" class="w-full h-48 object-cover">
+                                    <div class="p-6">
+                                        <span class="text-purple-400 text-sm uppercase font-semibold">Research Report</span>
+                                        <h3 class="text-2xl font-bold mt-2">Powering sustainable AI</h3>
+                                        <p class="mt-4 text-gray-400">Exploring how AI can be leveraged for sustainable business practices and environmental impact.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Carousel Item 2 -->
+                            <div class="carousel-item">
+                                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                                    <img src="https://placehold.co/600x400/4c1d95/ffffff?text=Resilience" alt="Resilience" class="w-full h-48 object-cover">
+                                    <div class="p-6">
+                                        <span class="text-purple-400 text-sm uppercase font-semibold">Research Report</span>
+                                        <h3 class="text-2xl font-bold mt-2">Resilience redefined</h3>
+                                        <p class="mt-4 text-gray-400">A deep dive into how businesses can build resilience in an ever-changing world.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Carousel Item 3 -->
+                            <div class="carousel-item">
+                                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                                    <img src="https://placehold.co/600x400/6b21a8/ffffff?text=Autonomous+Supply" alt="Autonomous Supply" class="w-full h-48 object-cover">
+                                    <div class="p-6">
+                                        <span class="text-purple-400 text-sm uppercase font-semibold">Research Report</span>
+                                        <h3 class="text-2xl font-bold mt-2">Ready for autonomous supply chains?</h3>
+                                        <p class="mt-4 text-gray-400">Examining the future of supply chain management with AI and automation.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Carousel Item 4 -->
+                            <div class="carousel-item">
+                                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                                    <img src="https://placehold.co/600x400/581c87/ffffff?text=Cybersecurity" alt="Cybersecurity" class="w-full h-48 object-cover">
+                                    <div class="p-6">
+                                        <span class="text-purple-400 text-sm uppercase font-semibold">Case Study</span>
+                                        <h3 class="text-2xl font-bold mt-2">Reinventing with our clients</h3>
+                                        <p class="mt-4 text-gray-400">A case study on a successful reinvention journey with a key client.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Carousel Item 5 -->
+                            <div class="carousel-item">
+                                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                                    <img src="https://placehold.co/600x400/312e81/ffffff?text=AI+Tech" alt="AI Tech" class="w-full h-48 object-cover">
+                                    <div class="p-6">
+                                        <span class="text-purple-400 text-sm uppercase font-semibold">Research Report</span>
+                                        <h3 class="text-2xl font-bold mt-2">The economics of reinventing work</h3>
+                                        <p class="mt-4 text-gray-400">How businesses are adapting to new work models and technologies.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Carousel Item 6 -->
+                            <div class="carousel-item">
+                                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                                    <img src="https://placehold.co/600x400/4c1d95/ffffff?text=Society" alt="Society" class="w-full h-48 object-cover">
+                                    <div class="p-6">
+                                        <span class="text-purple-400 text-sm uppercase font-semibold">Research Report</span>
+                                        <h3 class="text-2xl font-bold mt-2">Society redefined</h3>
+                                        <p class="mt-4 text-gray-400">Every time someone snaps a wildlife photo with iNaturalist, they might be fueling breakthrough science.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carousel Navigation -->
+                        <button id="prevBtn" class="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-purple-600 hover:bg-purple-700 text-white rounded-full p-3 shadow-lg focus:outline-none">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button id="nextBtn" class="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-purple-600 hover:bg-purple-700 text-white rounded-full p-3 shadow-lg focus:outline-none">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Job Listings -->
+            <section id="job-listings" class="py-20 bg-gray-800">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Current Job Openings</h2>
+                    <p class="text-lg text-gray-400 mx-auto max-w-2xl mb-12">Explore our available positions and find your place at the forefront of change. Click on any job to apply.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Job Card 1 -->
+                        <div class="bg-gray-900 rounded-lg shadow-xl p-8 transform hover:scale-105 transition-transform duration-300">
+                            <i class="fa-solid fa-laptop-code text-5xl text-purple-500 mb-4"></i>
+                            <h3 class="text-3xl font-bold mb-2">Senior Software Engineer</h3>
+                            <p class="text-gray-400 mb-4">Develop and maintain scalable software applications for enterprise clients.</p>
+                            <span class="inline-block bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded-full">Full-Time</span>
+                            <div class="mt-6">
+                                <button onclick="showView('apply')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Job Card 2 -->
+                        <div class="bg-gray-900 rounded-lg shadow-xl p-8 transform hover:scale-105 transition-transform duration-300">
+                            <i class="fa-solid fa-shield-halved text-5xl text-purple-500 mb-4"></i>
+                            <h3 class="text-3xl font-bold mb-2">Cybersecurity Analyst</h3>
+                            <p class="text-gray-400 mb-4">Monitor and protect systems from threats, ensuring the security of our data and clients.</p>
+                            <span class="inline-block bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded-full">Full-Time</span>
+                            <div class="mt-6">
+                                <button onclick="showView('apply')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Job Card 3 -->
+                        <div class="bg-gray-900 rounded-lg shadow-xl p-8 transform hover:scale-105 transition-transform duration-300">
+                            <i class="fa-solid fa-sitemap text-5xl text-purple-500 mb-4"></i>
+                            <h3 class="text-3xl font-bold mb-2">Cloud Solutions Architect</h3>
+                            <p class="text-gray-400 mb-4">Design and implement scalable cloud infrastructure for complex business needs.</p>
+                            <span class="inline-block bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded-full">Full-Time</span>
+                            <div class="mt-6">
+                                <button onclick="showView('apply')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Job Card 4 -->
+                        <div class="bg-gray-900 rounded-lg shadow-xl p-8 transform hover:scale-105 transition-transform duration-300">
+                            <i class="fa-solid fa-chart-line text-5xl text-purple-500 mb-4"></i>
+                            <h3 class="text-3xl font-bold mb-2">Data Scientist</h3>
+                            <p class="text-gray-400 mb-4">Analyze large datasets to extract insights and drive data-informed business strategies.</p>
+                            <span class="inline-block bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded-full">Full-Time</span>
+                            <div class="mt-6">
+                                <button onclick="showView('apply')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Job Card 5 -->
+                        <div class="bg-gray-900 rounded-lg shadow-xl p-8 transform hover:scale-105 transition-transform duration-300">
+                            <i class="fa-solid fa-headset text-5xl text-purple-500 mb-4"></i>
+                            <h3 class="text-3xl font-bold mb-2">IT Support Specialist</h3>
+                            <p class="text-gray-400 mb-4">Provide technical assistance and support to internal teams and external clients.</p>
+                            <span class="inline-block bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded-full">Full-Time</span>
+                            <div class="mt-6">
+                                <button onclick="showView('apply')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Job Card 6 -->
+                        <div class="bg-gray-900 rounded-lg shadow-xl p-8 transform hover:scale-105 transition-transform duration-300">
+                            <i class="fa-solid fa-people-carry-box text-5xl text-purple-500 mb-4"></i>
+                            <h3 class="text-3xl font-bold mb-2">Product Manager</h3>
+                            <p class="text-gray-400 mb-4">Oversee the product lifecycle from ideation to launch, working with cross-functional teams.</p>
+                            <span class="inline-block bg-purple-600 text-white text-sm font-semibold px-4 py-1 rounded-full">Full-Time</span>
+                            <div class="mt-6">
+                                <button onclick="showView('apply')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 360° Value -->
+            <section class="py-20 bg-black text-center">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-6xl md:text-7xl font-extrabold mb-4">360° VALUE</h2>
+                    <p class="text-xl text-gray-300 mx-auto max-w-3xl">Every day, we embrace change and create value for all our stakeholders around the world.</p>
+                    <div class="mt-8 flex justify-center">
+                        <a href="#" class="px-8 py-3 text-lg font-bold text-white bg-purple-600 rounded-full hover:bg-purple-700 transition-colors duration-300">
+                            See the report
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Careers Section -->
+            <section id="animated-careers-section" class="py-20 bg-gray-900 overflow-x-hidden">
+                <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
+                    <!-- Image Container -->
+                    <div class="lg:w-1/2 animated-element-left">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop" 
+                             alt="A diverse team collaborating in a modern office" 
+                             class="rounded-lg shadow-xl w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Content Container -->
+                    <div class="lg:w-1/2 animated-element-right">
+                        <h2 class="text-4xl md:text-5xl font-bold mt-2"><span class="logo-text">DYNDOX GOALS</span><br><br>Grow Your Career at the Heart of Change</h2>
+                        <p class="mt-6 text-xl text-gray-300">
+                            This is more than just a job. It's an opportunity to be part of a team that's redefining industries. We believe that the best solutions come from diverse perspectives and a shared passion for innovation.
+                        </p>
+                        
+                        <!-- Benefits List -->
+                        <div class="mt-8 space-y-4">
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-users text-purple-400 text-xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">Collaborative Environment</h4>
+                                    <p class="text-gray-400">Work alongside brilliant minds in a culture that fosters teamwork and shared success.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-lightbulb text-purple-400 text-xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">Drive Innovation</h4>
+                                    <p class="text-gray-400">Bring your curiosity and big ideas to the table. We empower you to challenge the status quo.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-globe text-purple-400 text-xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">Make a Global Impact</h4>
+                                    <p class="text-gray-400">Join projects that create meaningful, 360° value for our clients and communities worldwide.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-10">
+                            <a href="#job-listings" 
+                               class="px-8 py-4 text-lg font-bold text-white bg-purple-600 rounded-full hover:bg-purple-700 hover:scale-105 hover:shadow-2xl hover:shadow-purple-600/50 transform transition-all duration-300 inline-block">
+                                Join Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Teams Section -->
+            <section id="team-section" class="py-20 bg-black">
+                <div class="container mx-auto px-6">
+                    <!-- Section Header -->
+                    <div class="text-center mb-16">
+                        <h2 class="text-5xl md:text-6xl font-extrabold mb-6">
+                            <span class="text-purple-400">About</span> Teams & Members
+                        </h2>
+                        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                            Meet the brilliant minds behind DYNDOX. Our diverse team of experts brings together years of experience, innovation, and passion to deliver exceptional results.
+                        </p>
+                    </div>
+
+                    <!-- Team Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Team Member 1 -->
+                        <div class="team-card rounded-2xl p-8 text-center stagger">
+                            <div class="w-32 h-32 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <img src="https://image2url.com/images/1754913022159-1e7c2c09-65ba-4381-adbe-3d3f940d8861.png" 
+                                     alt="Divyansh Sharma" class="w-28 h-28 rounded-full object-cover">
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Divyansh Sharma</h3>
+                            <p class="text-purple-400 font-semibold mb-4">CEO & FOUNDER</p>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                                Visionary leader with 10+ years of experience in technology innovation and business transformation. Passionate about creating solutions that make a difference.
+                            </p>
+                            <div class="flex justify-center space-x-4">
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fab fa-twitter text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Team Member 2 -->
+
+                        <div class="team-card rounded-2xl p-8 text-center stagger">
+                            <div class="w-32 h-32 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <img src="https://image2url.com/images/1754925185714-486c2704-38c5-4aa0-8d00-ad8ab4b17110.jpg" 
+                                     alt="Laxmi Narayan Pandey" class="w-28 h-28 rounded-full object-cover">
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Laxmi Narayan Pandey</h3>
+                            <p class="text-purple-400 font-semibold mb-4">TECHNICAL HEAD</p>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                                Technical architect with deep expertise in cloud technologies, AI/ML, and scalable system design. Drives innovation across all technical initiatives.
+                            </p>
+                            <div class="flex justify-center space-x-4">
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                         <!-- Team Member 3 -->
+                        <div class="team-card rounded-2xl p-8 text-center stagger">
+                            <div class="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <img src="https://image2url.com/images/1754913746706-65cb2637-7d05-4562-99da-cfa62d31951b.jpg" 
+                                     alt="Prateek Singh" class="w-28 h-28 rounded-full object-cover">
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Prateek Singh</h3>
+                            <p class="text-purple-400 font-semibold mb-4">PROJECT MANAGER</p>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                                Expert project manager with exceptional organizational skills and a track record of delivering complex projects on time and within budget.
+                            </p>
+                            <div class="flex justify-center space-x-4">
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                          <!-- Team Member 4 -->
+                        <div class="team-card rounded-2xl p-8 text-center stagger">
+                            <div class="w-32 h-32 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <img src="https://image2url.com/images/1754912990325-b8d81f7a-a489-4ff8-bbda-e0e4cb28b8ad.png" 
+                                     alt="Kumud Sharma" class="w-28 h-28 rounded-full object-cover">
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Kumud Sharma</h3>
+                            <p class="text-purple-400 font-semibold mb-4">DOCUMENTATION HEAD</p>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                                Detail-oriented documentation specialist ensuring all processes, procedures, and knowledge are captured and accessible to the entire team.
+                            </p>
+                            <div class="flex justify-center space-x-4">
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fas fa-envelope text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Team Member 5 -->
+                        <div class="team-card rounded-2xl p-8 text-center stagger">
+                            <div class="w-32 h-32 bg-gradient-to-r from-pink-500 to-red-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <img src="https://image2url.com/images/1754912899266-af5cc7b4-aa7c-4714-80f0-600dea397c03.png" 
+                                     alt="Cherry" class="w-28 h-28 rounded-full object-cover">
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Kashneet Kaur</h3>
+                            <p class="text-purple-400 font-semibold mb-4">SOCIAL MEDIA HANDLER</p>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                                Creative social media strategist who builds engaging online communities and amplifies our brand voice across all digital platforms.
+                            </p>
+                            <div class="flex justify-center space-x-4">
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Team Member 6 -->
+                        <div class="team-card rounded-2xl p-8 text-center stagger">
+                            <div class="w-32 h-32 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <img src="https://thfvnext.bing.com/th/id/OIP.A1-i6IQpuDuwjX_t3HjixQHaFJ?w=282&h=196&c=7&r=0&o=7&cb=thfvnext&pid=1.7&rm=3" 
+                                     alt="Team Member" class="w-28 h-28 rounded-full object-cover">
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Join Our Team</h3>
+                            <p class="text-purple-400 font-semibold mb-4">YOUR ROLE HERE</p>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                                We're always looking for talented individuals who share our passion for innovation and excellence. Could this be your spot?
+                            </p>
+                            <div class="mt-6">
+                                <a href="#job-listings" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors">
+                                    Apply Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Application View -->
+        <div id="apply-view" class="application-view">
+            <div class="container mx-auto px-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-4xl md:text-5xl font-bold">Job Application Form</h2>
+                    <button onclick="showView('home')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                        <i class="fa-solid fa-arrow-left mr-2"></i>Back to Jobs
+                    </button>
+                </div>
+                <p class="text-lg text-gray-400 mx-auto max-w-2xl mb-6">Please fill out the form below to apply for this position.</p>
+                <iframe src="https://forms.gle/r1qkAnKaTiBFQpQJ6" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-extrabold mb-8">Let there be change</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-gray-400">
+                <div>
+                    <a href="#" class="block hover:text-white mb-2">Preference Center</a>
+                    <a href="#job-listings" class="block hover:text-white mb-2">Careers</a>
+                    <a href="#team-section" class="block hover:text-white mb-2">Our Team</a>
+                    <a href="#" class="block hover:text-white mb-2">Contact Us</a>
+                    <a href="#" class="block hover:text-white mb-2">Locations</a>
+                    <a href="#" class="block hover:text-white">Sitemap</a>
+                </div>
+                <div>
+                    <a href="#" class="block hover:text-white mb-2">Privacy Statement</a>
+                    <a href="#" class="block hover:text-white mb-2">Terms & Conditions</a>
+                    <a href="#" class="block hover:text-white mb-2">Cookie Policy/Settings</a>
+                    <a href="#" class="block hover:text-white mb-2">Accessibility Statement</a>
+                </div>
+            </div>
+            <div class="mt-8 text-gray-500 border-t border-gray-700 pt-8">
+                <p>&copy; 2025 DYNDOX IT Solutions. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Three.js sphere animation
+        window.onload = function() {
+            const canvas = document.getElementById('heroCanvas');
+            if (canvas) {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({
+                    canvas: canvas,
+                    alpha: true
+                });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                const geometry = new THREE.IcosahedronGeometry(1.5, 1);
+                const material = new THREE.MeshBasicMaterial({
+                    color: 0x6d28d9,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                const sphere = new THREE.Mesh(geometry, material);
+                scene.add(sphere);
+
+                const material2 = new THREE.MeshBasicMaterial({
+                    color: 0x6d28d9,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.3
+                });
+                const sphere2 = new THREE.Mesh(geometry.clone(), material2);
+                sphere2.scale.set(1.2, 1.2, 1.2);
+                scene.add(sphere2);
+
+                camera.position.z = 5;
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    sphere.rotation.x += 0.001;
+                    sphere.rotation.y += 0.002;
+                    sphere2.rotation.x -= 0.002;
+                    sphere2.rotation.y -= 0.001;
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            }
+        };
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-target');
+                const targetMenu = document.getElementById(targetId);
+                const chevron = button.querySelector('i');
+                
+                // Close other open dropdowns
+                document.querySelectorAll('.mobile-dropdown-menu').forEach(menu => {
+                    if (menu.id !== targetId) {
+                        menu.classList.remove('open');
+                        const otherButton = document.querySelector(`[data-target="${menu.id}"] i`);
+                        if (otherButton) {
+                            otherButton.classList.remove('fa-chevron-up');
+                            otherButton.classList.add('fa-chevron-down');
+                        }
+                    }
+                });
+                
+                // Toggle current dropdown
+                targetMenu.classList.toggle('open');
+                
+                // Toggle chevron direction
+                if (targetMenu.classList.contains('open')) {
+                    chevron.classList.remove('fa-chevron-down');
+                    chevron.classList.add('fa-chevron-up');
+                } else {
+                    chevron.classList.remove('fa-chevron-up');
+                    chevron.classList.add('fa-chevron-down');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // Carousel functionality
+        const carouselWrapper = document.querySelector('.carousel-wrapper');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            const items = carouselWrapper.children;
+            if (items.length === 0) return;
+            const carouselContainerWidth = carouselWrapper.parentElement.offsetWidth;
+            let itemsPerPage = 4;
+            if (window.innerWidth <= 1024 && window.innerWidth > 768) {
+                itemsPerPage = 2;
+            } else if (window.innerWidth <= 768) {
+                itemsPerPage = 1;
+            }
+            const itemWidth = carouselContainerWidth / itemsPerPage;
+            carouselWrapper.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            const totalItems = carouselWrapper.children.length;
+            const itemsPerPage = Math.floor(carouselWrapper.offsetWidth / carouselWrapper.children[0].offsetWidth);
+            if (currentIndex < totalItems - itemsPerPage) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateCarousel();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const totalItems = carouselWrapper.children.length;
+            const itemsPerPage = Math.floor(carouselWrapper.offsetWidth / carouselWrapper.children[0].offsetWidth);
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = totalItems - itemsPerPage;
+            }
+            updateCarousel();
+        });
+
+        window.addEventListener('resize', () => {
+            updateCarousel();
+        });
+
+        // Single-page routing
+        const homeView = document.getElementById('home-view');
+        const applyView = document.getElementById('apply-view');
+
+        function showView(viewName) {
+            if (viewName === 'home') {
+                homeView.style.display = 'block';
+                applyView.style.display = 'none';
+            } else if (viewName === 'apply') {
+                homeView.style.display = 'none';
+                applyView.style.display = 'block';
+            }
+            if (mobileMenu.classList.contains('open')) {
+                mobileMenu.classList.remove('open');
+            }
+            window.scrollTo(0, 0);
+        }
+
+        // Scroll-triggered animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    if (entry.target.id === 'animated-careers-section') {
+                        entry.target.classList.add('is-visible');
+                    } else if (entry.target.classList.contains('stagger')) {
+                        setTimeout(() => {
+                            entry.target.classList.add('animate');
+                        }, Math.random() * 300);
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe careers section
+        const careersSection = document.getElementById('animated-careers-section');
+        if (careersSection) {
+            observer.observe(careersSection);
+        }
+
+        // Observe team cards
+        document.querySelectorAll('.stagger').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
