@@ -59,6 +59,65 @@
             transform: translateX(0);
         }
 
+         /* Social Media Links Styling */
+          .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .social-link:hover::before {
+            opacity: 1;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Platform-specific colors */
+        .instagram::before { background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
+        .linkedin::before { background: #0077b5; }
+        .twitter::before { background: #1da1f2; }
+        .github::before { background: #333; }
+        .facebook::before { background: #1877f2; }
+        .youtube::before { background: #ff0000; }
+        .tiktok::before { background: #000; }
+        .snapchat::before { background: #fffc00; }
+
+        
+        /* Social Media Feed Container */
+
+         .social-feed {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         /* Stagger Animation */
         .stagger {
             opacity: 0;
@@ -84,33 +143,287 @@
             border-color: #8b5cf6;
         }
 
-        /* Carousel */
-        .carousel-container {
-            overflow: hidden;
-        }
-        
-        .carousel-wrapper {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-        
-        .carousel-item {
-            min-width: 25%;
-            box-sizing: border-box;
-            padding: 1rem;
-        }
-        
-        @media (max-width: 1024px) {
-            .carousel-item {
-                min-width: 50%;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .carousel-item {
-                min-width: 100%;
-            }
-        }
+        /* Carousel Container */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    padding: 0 80px; /* Increased padding to accommodate buttons outside */
+    margin: 0 auto;
+    max-width: 1200px; /* Add max-width for better control */
+}
+
+.carousel-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 1rem; /* Add consistent gap between items */
+}
+
+.carousel-item {
+    flex: 0 0 25%; /* Use flex instead of min-width for better control */
+    box-sizing: border-box;
+    padding: 1rem;
+    cursor: pointer; /* Add cursor pointer for clickable items */
+}
+
+/* Carousel Navigation Buttons - Positioned outside content area */
+.carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(139, 92, 246, 0.9); /* Purple theme to match your design */
+    border: 2px solid rgba(139, 92, 246, 1);
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    z-index: 20;
+    user-select: none;
+    outline: none;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.carousel-nav-btn:hover {
+    background: rgba(139, 92, 246, 1);
+    border-color: rgba(139, 92, 246, 1);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.carousel-nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-nav-btn:focus {
+    outline: 2px solid rgba(139, 92, 246, 0.7);
+    outline-offset: 2px;
+}
+
+/* Position buttons outside the content area */
+.carousel-prev {
+    left: 15px; /* Positioned outside the carousel items */
+}
+
+.carousel-next {
+    right: 15px; /* Positioned outside the carousel items */
+}
+
+/* Ensure icons are centered identically in both buttons */
+.carousel-nav-btn i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Alternative positioning - further outside if needed */
+.carousel-container.buttons-far {
+    padding: 0 100px;
+}
+
+.carousel-container.buttons-far .carousel-prev {
+    left: 25px;
+}
+
+.carousel-container.buttons-far .carousel-next {
+    right: 25px;
+}
+
+/* Responsive Design - Keep buttons outside at all sizes */
+@media (max-width: 1024px) {
+    .carousel-item {
+        flex: 0 0 50%;
+    }
+    
+    .carousel-container {
+        padding: 0 70px;
+    }
+    
+    .carousel-prev {
+        left: 10px;
+    }
+    
+    .carousel-next {
+        right: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-item {
+        flex: 0 0 100%;
+    }
+    
+    .carousel-container {
+        padding: 0 60px;
+    }
+    
+    .carousel-nav-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+    }
+    
+    .carousel-prev {
+        left: 5px;
+    }
+    
+    .carousel-next {
+        right: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-container {
+        padding: 0 55px;
+    }
+    
+    .carousel-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+    
+    .carousel-prev {
+        left: 2px;
+    }
+    
+    .carousel-next {
+        right: 2px;
+    }
+}
+
+/* Hide buttons on very small screens if needed */
+@media (max-width: 360px) {
+    .carousel-nav-btn {
+        display: none;
+    }
+    
+    .carousel-container {
+        padding: 0 20px;
+    }
+}
+
+/* Optional: Add carousel indicators */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 0.3);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.carousel-indicator.active {
+    background: rgba(139, 92, 246, 0.8);
+}
+
+.carousel-indicator:hover {
+    background: rgba(139, 92, 246, 0.6);
+}
+
+/* Disable button states */
+.carousel-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    background: rgba(139, 92, 246, 0.3);
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* Optional: Add button labels for accessibility */
+.carousel-nav-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+/* Smooth scrolling for touch devices */
+@media (hover: none) {
+    .carousel-container {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 20px;
+    }
+    
+    .carousel-item {
+        scroll-snap-align: start;
+    }
+    
+    .carousel-nav-btn {
+        display: none; /* Hide buttons on touch devices */
+    }
+}
+
+
+/* Optional: Add carousel indicators */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.carousel-indicator.active {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.carousel-indicator:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+/* Disable button states - identical for both */
+.carousel-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Smooth scrolling for touch devices */
+@media (hover: none) {
+    .carousel-container {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .carousel-item {
+        scroll-snap-align: start;
+    }
+    
+    .carousel-nav-btn {
+        display: none; /* Hide buttons on touch devices */
+    }
+}
+
 
         /* Desktop Dropdown */
         @media (min-width: 1024px) {
@@ -401,12 +714,14 @@
                         </div>
 
                         <!-- Carousel Navigation -->
-                        <button id="prevBtn" class="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-purple-600 hover:bg-purple-700 text-white rounded-full p-3 shadow-lg focus:outline-none">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </button>
-                        <button id="nextBtn" class="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-purple-600 hover:bg-purple-700 text-white rounded-full p-3 shadow-lg focus:outline-none">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
+                         
+                        <button class="carousel-nav-btn carousel-prev" id="prevBtn" aria-label="Previous">
+    <i class="fa-solid fa-chevron-left"></i>
+</button>
+<button class="carousel-nav-btn carousel-next" id="nextBtn" aria-label="Next">
+    <i class="fa-solid fa-chevron-right"></i>
+</button>
+
                     </div>
                 </div>
             </section>
@@ -577,7 +892,8 @@
                         </p>
                     </div>
 
-                    <!-- Team Grid -->
+
+                      <!-- Team Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <!-- Team Member 1 -->
                         <div class="team-card rounded-2xl p-8 text-center stagger">
@@ -588,20 +904,27 @@
                             <h3 class="text-2xl font-bold text-white mb-2">Divyansh Sharma</h3>
                             <p class="text-purple-400 font-semibold mb-4">CEO & FOUNDER</p>
                             <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                                Visionary leader with 10+ years of experience in technology innovation and business transformation. Passionate about creating solutions that make a difference.
+                                 I am the Founder and CEO of Dyndox Technologies, a startup launched in 2023. Dyndox offers an all-in-one business management platform that combines website building, project management, CRM, and marketing automation to help businesses streamline operations and grow.
                             </p>
-                            <div class="flex justify-center space-x-4">
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                            
+                            <!-- Enhanced Social Media Links -->
+                            <div class="flex justify-center space-x-3 mb-4">
+                                <a href="https://instagram.com/divyansh_sharma" target="_blank" class="social-link instagram" title="Instagram">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a href="https://linkedin.com/in/divyansh-sharma" target="_blank" class="social-link linkedin" title="LinkedIn">
                                     <i class="fab fa-linkedin text-xl"></i>
                                 </a>
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                <!-- <a href="https://twitter.com/divyansh_sharma" target="_blank" class="social-link twitter" title="Twitter">
                                     <i class="fab fa-twitter text-xl"></i>
+                                </a> -->
+                                <a href="https://github.com/divyansh-sharma" target="_blank" class="social-link github" title="GitHub">
+                                    <i class="fab fa-github text-xl"></i>
                                 </a>
                             </div>
                         </div>
 
                         <!-- Team Member 2 -->
-
                         <div class="team-card rounded-2xl p-8 text-center stagger">
                             <div class="w-32 h-32 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
                                 <img src="https://image2url.com/images/1754925185714-486c2704-38c5-4aa0-8d00-ad8ab4b17110.jpg" 
@@ -610,82 +933,119 @@
                             <h3 class="text-2xl font-bold text-white mb-2">Laxmi Narayan Pandey</h3>
                             <p class="text-purple-400 font-semibold mb-4">TECHNICAL HEAD</p>
                             <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                                Technical architect with deep expertise in cloud technologies, AI/ML, and scalable system design. Drives innovation across all technical initiatives.
+                                The Technical Head leads the startup’s technology vision and strategy, overseeing software development, system architecture, and product innovation. They manage technical teams, ensure scalable and secure solutions, evaluate emerging technologies, and align tech initiatives with business goals to drive growth and competitiveness.
                             </p>
-                            <div class="flex justify-center space-x-4">
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                            
+                            <!-- Enhanced Social Media Links -->
+                            <div class="flex justify-center space-x-3 mb-4">
+                                <a href="https://instagram.com/laxmi_pandey" target="_blank" class="social-link instagram" title="Instagram">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a href="https://linkedin.com/in/laxmi-pandey" target="_blank" class="social-link linkedin" title="LinkedIn">
                                     <i class="fab fa-linkedin text-xl"></i>
                                 </a>
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                <a href="https://github.com/deepanik" target="_blank" class="social-link github" title="GitHub">
                                     <i class="fab fa-github text-xl"></i>
                                 </a>
+                                <!-- <a href="https://youtube.com/@laxmipandey" target="_blank" class="social-link youtube" title="YouTube">
+                                    <i class="fab fa-youtube text-xl"></i>
+                                </a> -->
                             </div>
                         </div>
 
-                         <!-- Team Member 3 -->
-                        <div class="team-card rounded-2xl p-8 text-center stagger">
-                            <div class="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <!-- Team Member 3-->
+
+                          <div class="team-card rounded-2xl p-8 text-center stagger">
+                            <div class="w-32 h-32 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
                                 <img src="https://image2url.com/images/1754913746706-65cb2637-7d05-4562-99da-cfa62d31951b.jpg" 
                                      alt="Prateek Singh" class="w-28 h-28 rounded-full object-cover">
                             </div>
                             <h3 class="text-2xl font-bold text-white mb-2">Prateek Singh</h3>
                             <p class="text-purple-400 font-semibold mb-4">PROJECT MANAGER</p>
                             <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                                Expert project manager with exceptional organizational skills and a track record of delivering complex projects on time and within budget.
+                                I am resposible for oversees projects from initiation to completion, ensuring they meet deadlines, stay within budget, and achieve desired outcomes. They coordinate teams, manage resources, and maintain clear communication with stakeholders to deliver successful results.
                             </p>
-                            <div class="flex justify-center space-x-4">
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                            
+                            <!-- Enhanced Social Media Links -->
+                            <div class="flex justify-center space-x-3 mb-4">
+                                <a href="https://www.instagram.com/prateek_singh.__/" target="_blank" class="social-link instagram" title="Instagram">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/prateek-singh99/" target="_blank" class="social-link linkedin" title="LinkedIn">
                                     <i class="fab fa-linkedin text-xl"></i>
                                 </a>
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                <a href="https://github.com/Prateek062003" target="_blank" class="social-link github" title="GitHub">
                                     <i class="fab fa-github text-xl"></i>
                                 </a>
+                                <!-- <a href="https://youtube.com/@laxmipandey" target="_blank" class="social-link youtube" title="YouTube">
+                                    <i class="fab fa-youtube text-xl"></i>
+                                </a> -->
                             </div>
                         </div>
 
-                          <!-- Team Member 4 -->
-                        <div class="team-card rounded-2xl p-8 text-center stagger">
-                            <div class="w-32 h-32 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <!-- Team Member 4-->
+
+                          <div class="team-card rounded-2xl p-8 text-center stagger">
+                            <div class="w-32 h-32 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
                                 <img src="https://i.ibb.co/20bvrvck/Whats-App-Image-2025-08-13-at-11-08-23-32c4b09b.jpg" 
-                                     alt="Kumud Sharma" class="w-28 h-28 rounded-full object-cover">
+                                     alt="Laxmi Narayan Pandey" class="w-28 h-28 rounded-full object-cover">
                             </div>
                             <h3 class="text-2xl font-bold text-white mb-2">Kumud Sharma</h3>
                             <p class="text-purple-400 font-semibold mb-4">DOCUMENTATION HEAD</p>
                             <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                                Detail-oriented documentation specialist ensuring all processes, procedures, and knowledge are captured and accessible to the entire team.
+                                She leads the creation, organization, and maintenance of all company documents, ensuring accuracy, clarity, and compliance with standards. They manage documentation teams, streamline processes, and ensure that all records, manuals, and reports are easily accessible and up to date to support smooth business operations.
+
                             </p>
-                            <div class="flex justify-center space-x-4">
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                            
+                            <!-- Enhanced Social Media Links -->
+                            <div class="flex justify-center space-x-3 mb-4">
+                                <a href="https://instagram.com/laxmi_pandey" target="_blank" class="social-link instagram" title="Instagram">
+                                    <i class="fab fa-instagram text-xl"></i>
+                                </a>
+                                <a href="https://linkedin.com/in/laxmi-pandey" target="_blank" class="social-link linkedin" title="LinkedIn">
                                     <i class="fab fa-linkedin text-xl"></i>
                                 </a>
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
-                                    <i class="fas fa-envelope text-xl"></i>
+                                <a href="https://github.com/deepanik" target="_blank" class="social-link github" title="GitHub">
+                                    <i class="fab fa-github text-xl"></i>
                                 </a>
+                                <!-- <a href="https://youtube.com/@laxmipandey" target="_blank" class="social-link youtube" title="YouTube">
+                                    <i class="fab fa-youtube text-xl"></i>
+                                </a> -->
                             </div>
                         </div>
 
-                        <!-- Team Member 5 -->
-                        <div class="team-card rounded-2xl p-8 text-center stagger">
-                            <div class="w-32 h-32 bg-gradient-to-r from-pink-500 to-red-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <!-- Team Member 5-->
+
+                          <div class="team-card rounded-2xl p-8 text-center stagger">
+                            <div class="w-32 h-32 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
                                 <img src="https://image2url.com/images/1754912899266-af5cc7b4-aa7c-4714-80f0-600dea397c03.png" 
-                                     alt="Cherry" class="w-28 h-28 rounded-full object-cover">
+                                     alt="Laxmi Narayan Pandey" class="w-28 h-28 rounded-full object-cover">
                             </div>
                             <h3 class="text-2xl font-bold text-white mb-2">Kashneet Kaur</h3>
                             <p class="text-purple-400 font-semibold mb-4">SOCIAL MEDIA HANDLER</p>
                             <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                                Creative social media strategist who builds engaging online communities and amplifies our brand voice across all digital platforms.
+                                She is resposible for  Handle manage and executes the company’s online presence across various platforms, creating engaging content, monitoring trends, analyzing performance metrics, and interacting with the audience. They develop and implement strategies to enhance brand visibility, drive engagement, and support marketing goals.
                             </p>
-                            <div class="flex justify-center space-x-4">
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
-                                    <i class="fab fa-linkedin text-xl"></i>
-                                </a>
-                                <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                            
+                            <!-- Enhanced Social Media Links -->
+                            <div class="flex justify-center space-x-3 mb-4">
+                                <a href="https://instagram.com/laxmi_pandey" target="_blank" class="social-link instagram" title="Instagram">
                                     <i class="fab fa-instagram text-xl"></i>
                                 </a>
+                                <a href="https://linkedin.com/in/laxmi-pandey" target="_blank" class="social-link linkedin" title="LinkedIn">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                <a href="https://github.com/deepanik" target="_blank" class="social-link github" title="GitHub">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                                <!-- <a href="https://youtube.com/@laxmipandey" target="_blank" class="social-link youtube" title="YouTube">
+                                    <i class="fab fa-youtube text-xl"></i>
+                                </a> -->
                             </div>
                         </div>
 
-                        <!-- Team Member 6 -->
+
+                          <!-- Team Member 6 - Add more team members as needed -->
                         <div class="team-card rounded-2xl p-8 text-center stagger">
                             <div class="w-32 h-32 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mx-auto mb-6 flex items-center justify-center">
                                 <img src="https://thfvnext.bing.com/th/id/OIP.A1-i6IQpuDuwjX_t3HjixQHaFJ?w=282&h=196&c=7&r=0&o=7&cb=thfvnext&pid=1.7&rm=3" 
@@ -702,8 +1062,6 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                </div>
             </section>
         </div>
 
@@ -853,6 +1211,69 @@
             });
         });
 
+         // Social Media Feed Loading Function
+        function loadSocialFeed(memberName) {
+            const feedContainer = document.getElementById(`${memberName}-posts`);
+            const button = event.target;
+            
+            // Show loading state
+            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
+            button.disabled = true;
+            
+            // Simulate API call (replace with actual social media API calls)
+            setTimeout(() => {
+                // Sample social media posts (replace with real API data)
+                const samplePosts = [
+                    {
+                        platform: 'instagram',
+                        content: 'Working on the latest AI project! 🚀 #TechLife #Innovation',
+                        timestamp: '2 hours ago',
+                        likes: 45,
+                        image: 'https://placehold.co/300x200/6366f1/ffffff?text=Latest+Project'
+                    },
+                    {
+                        platform: 'linkedin',
+                        content: 'Excited to share our new breakthrough in sustainable technology...',
+                        timestamp: '1 day ago',
+                        likes: 128,
+                        comments: 15
+                    },
+                    {
+                        platform: 'twitter',
+                        content: 'Just finished an amazing team meeting discussing future innovations! 💡',
+                        timestamp: '3 days ago',
+                        likes: 89,
+                        retweets: 23
+                    }
+                ];
+
+                // Create posts HTML
+                const postsHTML = samplePosts.map(post => `
+                    <div class="bg-gray-800 rounded-lg p-4 mb-3 border border-gray-700">
+                        <div class="flex items-center mb-2">
+                            <i class="fab fa-${post.platform} text-purple-400 mr-2"></i>
+                            <span class="text-sm text-gray-400">${post.timestamp}</span>
+                        </div>
+                        ${post.image ? `<img src="${post.image}" alt="Post image" class="w-full rounded-lg mb-3">` : ''}
+                        <p class="text-gray-300 text-sm mb-2">${post.content}</p>
+                        <div class="flex items-center text-xs text-gray-500">
+                            <i class="fas fa-heart mr-1"></i>
+                            <span class="mr-3">${post.likes}</span>
+                            ${post.comments ? `<i class="fas fa-comment mr-1"></i><span class="mr-3">${post.comments}</span>` : ''}
+                            ${post.retweets ? `<i class="fas fa-retweet mr-1"></i><span>${post.retweets}</span>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+                
+                feedContainer.innerHTML = postsHTML;
+                feedContainer.classList.remove('hidden');
+                
+                // Reset button
+                button.innerHTML = '<i class="fas fa-sync-alt mr-2"></i>Refresh Posts';
+                button.disabled = false;
+            }, 2000);
+        }
+
         // Carousel functionality
         const carouselWrapper = document.querySelector('.carousel-wrapper');
         const prevBtn = document.getElementById('prevBtn');
@@ -948,4 +1369,4 @@
     </script>
 </body>
 </html>
-
+w
