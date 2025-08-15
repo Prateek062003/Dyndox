@@ -31,7 +31,7 @@
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: slideGradient 6s linear infinite;
+            animation: slideGradient 50s linear infinite;
         }
         
         @keyframes slideGradient {
@@ -469,14 +469,50 @@
             border-radius: 1rem;
         }
 
+        /* Careers View */
+        .careers-view {
+            display: none;
+            min-height: 100vh;
+            padding-top: 8rem;
+            padding-bottom: 2rem;
+            background-color: #111827;
+        }
+        
         /* Smooth Scrolling */
         html {
             scroll-behavior: smooth;
+        }
+        
+        /* Back button */
+        .back-button {
+            position: absolute;
+            top: 100px;
+            left: 30px;
+            z-index: 100;
+        }
+        
+        /* Mobile menu backdrop */
+        .mobile-menu-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 55;
+        }
+        
+        .mobile-menu-backdrop.active {
+            display: block;
         }
     </style>
 </head>
 
 <body class="bg-black text-white font-sans">
+    <!-- Mobile Menu Backdrop -->
+    <div id="mobile-menu-backdrop" class="mobile-menu-backdrop"></div>
+
     <!-- Header -->
     <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -536,8 +572,8 @@
                         <i class="fa-solid fa-chevron-down ml-2 text-xs"></i>
                     </button>
                     <div class="dropdown-menu absolute hidden text-gray-700 pt-1 w-48 bg-white rounded-lg shadow-lg">
-                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-t-lg" href="#job-listings">Job Available</a>
-                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-b-lg" href="#team-section">Our Team</a>
+                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-t-lg" href="javascript:showView('jobs')">Job Available</a>
+                        <a class="block px-4 py-2 hover:bg-gray-200 rounded-b-lg" href="javascript:showView('teams')">Our Team</a>
                     </div>
                 </div>
             </div>
@@ -606,8 +642,8 @@
                 <i class="fa-solid fa-chevron-down text-xs"></i>
             </button>
             <div id="mobile-dropdown-4" class="mobile-dropdown-menu">
-                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#job-listings">Job Available</a>
-                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="#team-section">Our Team</a>
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="javascript:showView('jobs')">Job Available</a>
+                <a class="block px-8 py-2 text-gray-300 hover:text-white hover:bg-gray-800" href="javascript:showView('teams')">Our Team</a>
             </div>
         </div>
     </div>
@@ -726,8 +762,80 @@
                 </div>
             </section>
 
+            <!-- Careers Section -->
+            <section id="animated-careers-section" class="py-20 bg-gray-900 overflow-x-hidden">
+                <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
+                    <!-- Image Container -->
+                    <div class="lg:w-1/2 animated-element-left">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop" 
+                             alt="A diverse team collaborating in a modern office" 
+                             class="rounded-lg shadow-xl w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Content Container -->
+                    <div class="lg:w-1/2 animated-element-right">
+                        <h2 class="text-4xl md:text-5xl font-bold mt-2"><span class="logo-text">DYNDOX GOALS</span><br><br>Grow Your Career at the Heart of Change</h2>
+                        <p class="mt-6 text-xl text-gray-300">
+                            This is more than just a job. It's an opportunity to be part of a team that's redefining industries. We believe that the best solutions come from diverse perspectives and a shared passion for innovation.
+                        </p>
+                        
+                        <!-- Benefits List -->
+                        <div class="mt-8 space-y-4">
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-users text-purple-400 text-xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">Collaborative Environment</h4>
+                                    <p class="text-gray-400">Work alongside brilliant minds in a culture that fosters teamwork and shared success.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-lightbulb text-purple-400 text-xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">Drive Innovation</h4>
+                                    <p class="text-gray-400">Bring your curiosity and big ideas to the table. We empower you to challenge the status quo.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa-solid fa-globe text-purple-400 text-xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">Make a Global Impact</h4>
+                                    <p class="text-gray-400">Join projects that create meaningful, 360° value for our clients and communities worldwide.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-10">
+                            <a href="javascript:showView('jobs')" 
+                               class="px-8 py-4 text-lg font-bold text-white bg-purple-600 rounded-full hover:bg-purple-700 hover:scale-105 hover:shadow-2xl hover:shadow-purple-600/50 transform transition-all duration-300 inline-block">
+                                Join Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 360° Value -->
+            <section class="py-20 bg-black text-center">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-6xl md:text-7xl font-extrabold mb-4">360° VALUE</h2>
+                    <p class="text-xl text-gray-300 mx-auto max-w-3xl">Every day, we embrace change and create value for all our stakeholders around the world.</p>
+                    <div class="mt-8 flex justify-center">
+                        <a href="#" id="download-report" class="px-8 py-3 text-lg font-bold text-white bg-purple-600 rounded-full hover:bg-purple-700 transition-colors duration-300">
+                            See the report
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Jobs View -->
+        <div id="jobs-view" class="careers-view">
+            <button onclick="showView('home')" class="back-button px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                <i class="fa-solid fa-arrow-left mr-2"></i>Back to Home
+            </button>
+            
             <!-- Job Listings -->
-            <section id="job-listings" class="py-20 bg-gray-800">
+            <section class="py-20 bg-gray-800">
                 <div class="container mx-auto px-6 text-center">
                     <h2 class="text-4xl md:text-5xl font-bold mb-4">Current Job Openings</h2>
                     <p class="text-lg text-gray-400 mx-auto max-w-2xl mb-12">Explore our available positions and find your place at the forefront of change. Click on any job to apply.</p>
@@ -813,74 +921,16 @@
                     </div>
                 </div>
             </section>
+        </div>
 
-            <!-- 360° Value -->
-            <section class="py-20 bg-black text-center">
-                <div class="container mx-auto px-6">
-                    <h2 class="text-6xl md:text-7xl font-extrabold mb-4">360° VALUE</h2>
-                    <p class="text-xl text-gray-300 mx-auto max-w-3xl">Every day, we embrace change and create value for all our stakeholders around the world.</p>
-                    <div class="mt-8 flex justify-center">
-                        <a href="#" class="px-8 py-3 text-lg font-bold text-white bg-purple-600 rounded-full hover:bg-purple-700 transition-colors duration-300">
-                            See the report
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Careers Section -->
-            <section id="animated-careers-section" class="py-20 bg-gray-900 overflow-x-hidden">
-                <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
-                    <!-- Image Container -->
-                    <div class="lg:w-1/2 animated-element-left">
-                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop" 
-                             alt="A diverse team collaborating in a modern office" 
-                             class="rounded-lg shadow-xl w-full h-full object-cover">
-                    </div>
-                    
-                    <!-- Content Container -->
-                    <div class="lg:w-1/2 animated-element-right">
-                        <h2 class="text-4xl md:text-5xl font-bold mt-2"><span class="logo-text">DYNDOX GOALS</span><br><br>Grow Your Career at the Heart of Change</h2>
-                        <p class="mt-6 text-xl text-gray-300">
-                            This is more than just a job. It's an opportunity to be part of a team that's redefining industries. We believe that the best solutions come from diverse perspectives and a shared passion for innovation.
-                        </p>
-                        
-                        <!-- Benefits List -->
-                        <div class="mt-8 space-y-4">
-                            <div class="flex items-start">
-                                <i class="fa-solid fa-users text-purple-400 text-xl mt-1 mr-4"></i>
-                                <div>
-                                    <h4 class="font-bold text-lg">Collaborative Environment</h4>
-                                    <p class="text-gray-400">Work alongside brilliant minds in a culture that fosters teamwork and shared success.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fa-solid fa-lightbulb text-purple-400 text-xl mt-1 mr-4"></i>
-                                <div>
-                                    <h4 class="font-bold text-lg">Drive Innovation</h4>
-                                    <p class="text-gray-400">Bring your curiosity and big ideas to the table. We empower you to challenge the status quo.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <i class="fa-solid fa-globe text-purple-400 text-xl mt-1 mr-4"></i>
-                                <div>
-                                    <h4 class="font-bold text-lg">Make a Global Impact</h4>
-                                    <p class="text-gray-400">Join projects that create meaningful, 360° value for our clients and communities worldwide.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-10">
-                            <a href="#job-listings" 
-                               class="px-8 py-4 text-lg font-bold text-white bg-purple-600 rounded-full hover:bg-purple-700 hover:scale-105 hover:shadow-2xl hover:shadow-purple-600/50 transform transition-all duration-300 inline-block">
-                                Join Us
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+        <!-- Teams View -->
+        <div id="teams-view" class="careers-view">
+            <button onclick="showView('home')" class="back-button px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                <i class="fa-solid fa-arrow-left mr-2"></i>Back to Home
+            </button>
+            
             <!-- About Teams Section -->
-            <section id="team-section" class="py-20 bg-black">
+            <section class="py-20 bg-black">
                 <div class="container mx-auto px-6">
                     <!-- Section Header -->
                     <div class="text-center mb-16">
@@ -891,7 +941,6 @@
                             Meet the brilliant minds behind DYNDOX. Our diverse team of experts brings together years of experience, innovation, and passion to deliver exceptional results.
                         </p>
                     </div>
-
 
                       <!-- Team Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -915,9 +964,6 @@
                                 <a href="https://linkedin.com/in/divyansh-sharma" target="_blank" class="social-link linkedin" title="LinkedIn">
                                     <i class="fab fa-linkedin text-xl"></i>
                                 </a>
-                                <!-- <a href="https://twitter.com/divyansh_sharma" target="_blank" class="social-link twitter" title="Twitter">
-                                    <i class="fab fa-twitter text-xl"></i>
-                                </a> -->
                                 <a href="https://github.com/divyansh-sharma" target="_blank" class="social-link github" title="GitHub">
                                     <i class="fab fa-github text-xl"></i>
                                 </a>
@@ -947,9 +993,6 @@
                                 <a href="https://github.com/deepanik" target="_blank" class="social-link github" title="GitHub">
                                     <i class="fab fa-github text-xl"></i>
                                 </a>
-                                <!-- <a href="https://youtube.com/@laxmipandey" target="_blank" class="social-link youtube" title="YouTube">
-                                    <i class="fab fa-youtube text-xl"></i>
-                                </a> -->
                             </div>
                         </div>
 
@@ -971,15 +1014,12 @@
                                 <a href="https://instagram.com/prateek_singh.__" target="_blank" class="social-link instagram" title="Instagram">
                                     <i class="fab fa-instagram text-xl"></i>
                                 </a>
-                                <a href="https://www.linkedin.com/in/prateek-singh99" target="_blank" class="social-link linkedin" title="LinkedIn">
+                                <a href="https://www.linkedin.com/in/prateek-singh99/" target="_blank" class="social-link linkedin" title="LinkedIn">
                                     <i class="fab fa-linkedin text-xl"></i>
                                 </a>
                                 <a href="https://github.com/Prateek062003" target="_blank" class="social-link github" title="GitHub">
                                     <i class="fab fa-github text-xl"></i>
                                 </a>
-                                <!-- <a href="https://youtube.com/@laxmipandey" target="_blank" class="social-link youtube" title="YouTube">
-                                    <i class="fab fa-youtube text-xl"></i>
-                                </a> -->
                             </div>
                         </div>
 
@@ -988,13 +1028,12 @@
                           <div class="team-card rounded-2xl p-8 text-center stagger">
                             <div class="w-32 h-32 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
                                 <img src="https://i.ibb.co/20bvrvck/Whats-App-Image-2025-08-13-at-11-08-23-32c4b09b.jpg" 
-                                     alt="Laxmi Narayan Pandey" class="w-28 h-28 rounded-full object-cover">
+                                     alt="Kumud Sharma" class="w-28 h-28 rounded-full object-cover">
                             </div>
                             <h3 class="text-2xl font-bold text-white mb-2">Kumud Sharma</h3>
                             <p class="text-purple-400 font-semibold mb-4">DOCUMENTATION HEAD</p>
                             <p class="text-gray-300 text-sm leading-relaxed mb-6">
                                 She leads the creation, organization, and maintenance of all company documents, ensuring accuracy, clarity, and compliance with standards. They manage documentation teams, streamline processes, and ensure that all records, manuals, and reports are easily accessible and up to date to support smooth business operations.
-
                             </p>
                             
                             <!-- Enhanced Social Media Links -->
@@ -1008,9 +1047,6 @@
                                 <a href="https://github.com/deepanik" target="_blank" class="social-link github" title="GitHub">
                                     <i class="fab fa-github text-xl"></i>
                                 </a>
-                                <!-- <a href="https://youtube.com/@laxmipandey" target="_blank" class="social-link youtube" title="YouTube">
-                                    <i class="fab fa-youtube text-xl"></i>
-                                </a> -->
                             </div>
                         </div>
 
@@ -1019,7 +1055,7 @@
                           <div class="team-card rounded-2xl p-8 text-center stagger">
                             <div class="w-32 h-32 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
                                 <img src="https://image2url.com/images/1754912899266-af5cc7b4-aa7c-4714-80f0-600dea397c03.png" 
-                                     alt="Laxmi Narayan Pandey" class="w-28 h-28 rounded-full object-cover">
+                                     alt="Kashneet Kaur" class="w-28 h-28 rounded-full object-cover">
                             </div>
                             <h3 class="text-2xl font-bold text-white mb-2">Kashneet Kaur</h3>
                             <p class="text-purple-400 font-semibold mb-4">SOCIAL MEDIA HANDLER</p>
@@ -1038,9 +1074,6 @@
                                 <a href="https://github.com/deepanik" target="_blank" class="social-link github" title="GitHub">
                                     <i class="fab fa-github text-xl"></i>
                                 </a>
-                                <!-- <a href="https://youtube.com/@laxmipandey" target="_blank" class="social-link youtube" title="YouTube">
-                                    <i class="fab fa-youtube text-xl"></i>
-                                </a> -->
                             </div>
                         </div>
 
@@ -1057,7 +1090,7 @@
                                 We're always looking for talented individuals who share our passion for innovation and excellence. Could this be your spot?
                             </p>
                             <div class="mt-6">
-                                <a href="#job-listings" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors">
+                                <a href="javascript:showView('jobs')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors">
                                     Apply Now
                                 </a>
                             </div>
@@ -1070,7 +1103,7 @@
             <div class="container mx-auto px-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-4xl md:text-5xl font-bold">Job Application Form</h2>
-                    <button onclick="showView('home')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
+                    <button onclick="showView('jobs')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-700 transition-colors duration-300">
                         <i class="fa-solid fa-arrow-left mr-2"></i>Back to Jobs
                     </button>
                 </div>
@@ -1087,8 +1120,8 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-gray-400">
                 <div>
                     <a href="#" class="block hover:text-white mb-2">Preference Center</a>
-                    <a href="#job-listings" class="block hover:text-white mb-2">Careers</a>
-                    <a href="#team-section" class="block hover:text-white mb-2">Our Team</a>
+                    <a href="javascript:showView('jobs')" class="block hover:text-white mb-2">Careers</a>
+                    <a href="javascript:showView('teams')" class="block hover:text-white mb-2">Our Team</a>
                     <a href="#" class="block hover:text-white mb-2">Contact Us</a>
                     <a href="#" class="block hover:text-white mb-2">Locations</a>
                     <a href="#" class="block hover:text-white">Sitemap</a>
@@ -1159,17 +1192,28 @@
             }
         };
 
-        // Mobile menu toggle
+        // Mobile menu elements
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileMenuClose = document.getElementById('mobile-menu-close');
         const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
 
-        mobileMenuToggle.addEventListener('click', () => {
-            mobileMenu.classList.add('open');
-        });
-        mobileMenuClose.addEventListener('click', () => {
+        // Function to toggle mobile menu
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('open');
+            mobileMenuBackdrop.classList.toggle('active');
+        }
+
+        // Function to close mobile menu
+        function closeMobileMenu() {
             mobileMenu.classList.remove('open');
-        });
+            mobileMenuBackdrop.classList.remove('active');
+        }
+
+        // Event listeners
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
 
         // Mobile dropdown functionality
         document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
@@ -1207,72 +1251,9 @@
         // Close mobile menu when clicking on links
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.remove('open');
+                closeMobileMenu();
             });
         });
-
-         // Social Media Feed Loading Function
-        function loadSocialFeed(memberName) {
-            const feedContainer = document.getElementById(`${memberName}-posts`);
-            const button = event.target;
-            
-            // Show loading state
-            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
-            button.disabled = true;
-            
-            // Simulate API call (replace with actual social media API calls)
-            setTimeout(() => {
-                // Sample social media posts (replace with real API data)
-                const samplePosts = [
-                    {
-                        platform: 'instagram',
-                        content: 'Working on the latest AI project! 🚀 #TechLife #Innovation',
-                        timestamp: '2 hours ago',
-                        likes: 45,
-                        image: 'https://placehold.co/300x200/6366f1/ffffff?text=Latest+Project'
-                    },
-                    {
-                        platform: 'linkedin',
-                        content: 'Excited to share our new breakthrough in sustainable technology...',
-                        timestamp: '1 day ago',
-                        likes: 128,
-                        comments: 15
-                    },
-                    {
-                        platform: 'twitter',
-                        content: 'Just finished an amazing team meeting discussing future innovations! 💡',
-                        timestamp: '3 days ago',
-                        likes: 89,
-                        retweets: 23
-                    }
-                ];
-
-                // Create posts HTML
-                const postsHTML = samplePosts.map(post => `
-                    <div class="bg-gray-800 rounded-lg p-4 mb-3 border border-gray-700">
-                        <div class="flex items-center mb-2">
-                            <i class="fab fa-${post.platform} text-purple-400 mr-2"></i>
-                            <span class="text-sm text-gray-400">${post.timestamp}</span>
-                        </div>
-                        ${post.image ? `<img src="${post.image}" alt="Post image" class="w-full rounded-lg mb-3">` : ''}
-                        <p class="text-gray-300 text-sm mb-2">${post.content}</p>
-                        <div class="flex items-center text-xs text-gray-500">
-                            <i class="fas fa-heart mr-1"></i>
-                            <span class="mr-3">${post.likes}</span>
-                            ${post.comments ? `<i class="fas fa-comment mr-1"></i><span class="mr-3">${post.comments}</span>` : ''}
-                            ${post.retweets ? `<i class="fas fa-retweet mr-1"></i><span>${post.retweets}</span>` : ''}
-                        </div>
-                    </div>
-                `).join('');
-                
-                feedContainer.innerHTML = postsHTML;
-                feedContainer.classList.remove('hidden');
-                
-                // Reset button
-                button.innerHTML = '<i class="fas fa-sync-alt mr-2"></i>Refresh Posts';
-                button.disabled = false;
-            }, 2000);
-        }
 
         // Carousel functionality
         const carouselWrapper = document.querySelector('.carousel-wrapper');
@@ -1322,21 +1303,34 @@
 
         // Single-page routing
         const homeView = document.getElementById('home-view');
+        const jobsView = document.getElementById('jobs-view');
+        const teamsView = document.getElementById('teams-view');
         const applyView = document.getElementById('apply-view');
 
         function showView(viewName) {
+            // Hide all views
+            homeView.style.display = 'none';
+            jobsView.style.display = 'none';
+            teamsView.style.display = 'none';
+            applyView.style.display = 'none';
+            
+            // Show the requested view
             if (viewName === 'home') {
                 homeView.style.display = 'block';
-                applyView.style.display = 'none';
+            } else if (viewName === 'jobs') {
+                jobsView.style.display = 'block';
+            } else if (viewName === 'teams') {
+                teamsView.style.display = 'block';
             } else if (viewName === 'apply') {
-                homeView.style.display = 'none';
                 applyView.style.display = 'block';
             }
-            if (mobileMenu.classList.contains('open')) {
-                mobileMenu.classList.remove('open');
-            }
+            
+            closeMobileMenu();
             window.scrollTo(0, 0);
         }
+
+        // Initialize with home view
+        showView('home');
 
         // Scroll-triggered animations
         const observer = new IntersectionObserver((entries) => {
@@ -1366,8 +1360,63 @@
         document.querySelectorAll('.stagger').forEach(card => {
             observer.observe(card);
         });
+
+        // PDF Download functionality
+        document.getElementById('download-report').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Create a dummy PDF using jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFontSize(22);
+            doc.text('DYNDOX Annual Report 2025', 105, 20, null, null, 'center');
+            
+            doc.setFontSize(16);
+            doc.text('360° Value Report', 105, 35, null, null, 'center');
+            
+            doc.setFontSize(12);
+            const content = [
+                "This report highlights our achievements and progress throughout 2025.",
+                " ",
+                "Key Highlights:",
+                "- Revenue growth of 42% year-over-year",
+                "- Expanded to 3 new international markets",
+                "- Launched 5 new AI-powered products",
+                "- Reduced carbon emissions by 28%",
+                " ",
+                "Financial Performance:",
+                "Q1: $12.5M | Q2: $14.2M | Q3: $16.8M | Q4: $18.4M",
+                " ",
+                "Our Commitment:",
+                "At DYNDOX, we're committed to creating sustainable technology solutions",
+                "that drive real change in industries worldwide. Our focus on ethical AI",
+                "and responsible innovation continues to guide our product development",
+                "and client partnerships."
+            ];
+            
+            let yPosition = 50;
+            content.forEach(line => {
+                doc.text(line, 20, yPosition);
+                yPosition += 7;
+            });
+            
+            // Save the PDF
+            doc.save('DYNDOX_Annual_Report_2025.pdf');
+            
+            // Show a success message
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check mr-2"></i>Report Downloaded!';
+            this.style.backgroundColor = '#10b981';
+            
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.style.backgroundColor = '';
+            }, 3000);
+        });
     </script>
+
+    <!-- jsPDF library for generating PDF reports -->
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
-w
-
